@@ -42,7 +42,7 @@
 						<label for="inputCCNum">Credit Card Number</label>
 						<input type="text" class="form-control" name="ccnum" id="ccnum" placeholder="Credit Card Number">
 					</div>
-					<button type="submit" id="submit" name="submit" class="btn btn-default">Submit</button>
+					<button type="submit" id="submit" name="submit" class="btn btn-default btn-block">Submit</button>
 				</form>
 			</div>
 
@@ -58,6 +58,7 @@
 		function isValid(value){
 
 			//algorithm found at: http://stackoverflow.com/questions/12310837/implementation-of-luhn-algorithm
+			if(value == null || value == "") return false;
 
 			if (/[^0-9-\s]+/.test(value)) return false;
 
