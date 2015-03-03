@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		
+		<title>Assignment 1</title>
+		
+		<meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+		
+		<!-- bootstrap -->
+		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="includes/css/bootstrap-glyphicons.css" rel="stylesheet">
+		
+		<!-- custom -->
+		<link rel="stylesheet" href="includes/css/styles.css">
+		
+		<!-- modernizr -->
+		<script src="includes/js/modernizr-2.6.2.min.js"></script>
+		<script type="text/javascript" src="includes/js/jquery-1.8.2.min.js"></script>
+		
+	</head>
+	<body>
+		
+		<div class="jumbotron">
+			<h1>VALIDATOR</h1>
+		</div>
+
+		<div class="container" id="main">
+
+			<div class="container">
+				
+				<div id="valid" class="valid"> <img src="img/thumbUp.png" height="50" width="50"> <h3> Valid Credit Card Number</h3></div>
+				<div id="invalid" class="invalid"><img src="img/thumbsDown.png" height="50" width="50"><h3>Invalid Credit Card Number </h3></div>
+
+				<form id="ccvalid" onSubmit="validate()"> 
+					<div class="form-group">
+						<label for="inputCCNum">Credit Card Number</label>
+						<input type="text" class="form-control" name="ccnum" id="ccnum" placeholder="Credit Card Number">
+					</div>
+					<button type="submit" id="submit" name="submit" class="btn btn-default">Submit</button>
+				</form>
+			</div>
+
+		</div><!-- container -->
+		
+	<script>
+		$('#valid').hide();
+		$('#invalid').hide();
+	</script>
+
+	<script>
+
+		function isValid(value){
+
+			//algorithm found at: http://stackoverflow.com/questions/12310837/implementation-of-luhn-algorithm
+
+			if (/[^0-9-\s]+/.test(value)) return false;
+
+		    var nCheck = 0, nDigit = 0, bEven = false;
+		    value = value.replace(/\D/g, "");
+
+		    for (var n = value.length - 1; n >= 0; n--) {
+		        var cDigit = value.charAt(n),
+		            nDigit = parseInt(cDigit, 10);
+
+		        if (bEven) {
+		            if ((nDigit *= 2) > 9) nDigit -= 9;
+		        }
+
+		        nCheck += nDigit;
+		        bEven = !bEven;
+		    }
+
+		    return (nCheck % 10) == 0;
+		}
+
+		$("#submit").click(function(){
+			var value = $("#ccvalid").find('input[name="ccnum"]').val();
+			if(isValid(value)){
+				$("#valid").show();
+				$("#invalid").hide();
+			}
+			else{
+				$("#invalid").show();
+				$("#valid").hide();
+			}
+			
+			return false;
+		});
+	</script>
+
+	<script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+        app.initialize();
+    </script>
+		
+	<!-- jquery -->
+	<!--<script src="http://code.jquery.com/jquery.js"></script>
+	<script>window.jQuery || document.write('<script src="includes/js/jquery-1.8.2.min.js"><\/script>')</script> -->
+	
+
+	<!-- boostrap -->
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	
+	<!-- custom -->
+	<script src="includes/js/script.js"></script>
+	
+	</body>
+</html>
+
